@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    username: propertymanager
+    password: propertymanager
+    url: jdbc:mysql://localhost:3306/propertymanager
+
+logging:
+  level:
+    root: warn
+    '[com.jaredbears]': debug

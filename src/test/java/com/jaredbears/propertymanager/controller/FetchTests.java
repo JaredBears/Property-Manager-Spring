@@ -2,6 +2,8 @@ package com.jaredbears.propertymanager.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,8 +33,8 @@ class FetchTests extends FetchTestSupport {
   @Test
   void testThatCitiesAreReturnedWhenStateIsSupplied() {
     //GIVEN: a valid state
-    String state = "IL";
-    String uri = String.format("%s?state=%s", getBaseUri(), state);
+    String stateCode = "IL";
+    String uri = String.format("%s?stateCode=%s", getBaseUri(), stateCode);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<List<City>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -42,9 +44,28 @@ class FetchTests extends FetchTestSupport {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     
     //AND: the actual list is the same as the expected list
-    //List<City> actual = response.getBody();
-    //List<City> expected = buildExpected();
-    //assertThat(actual).isEqualTo(expected);
+    List<City> actual = response.getBody();
+    List<City> expected = buildExpected();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAnErrorMessageIsReturnedWhenInvalidStateIsSupplied() {
+    //GIVEN: an invalid state
+    String stateCode = "INVALID";
+    String uri = String.format("%s?stateCode=%s", getBaseUri(), stateCode);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
+        null, new ParameterizedTypeReference<>() {});
+    
+    // Then: a bad request (400) status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    // And: an error message is returned
+    Map<String, Object> error = response.getBody();
+
+    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
   }
 
 }

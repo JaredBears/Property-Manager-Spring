@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class DefaultPropertyManager implements PropertyManagerController {
+public class DefaultPropertyManagerController implements PropertyManagerController {
   
   @Autowired
   private PropertyManagerService propertyManagerService;

@@ -1,7 +1,10 @@
 package com.jaredbears.propertymanager.controller.support;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import org.springframework.http.HttpStatus;
 import com.jaredbears.propertymanager.entity.City;
 
 public class FetchTestSupport extends BaseTest {
@@ -1297,6 +1300,17 @@ public class FetchTestSupport extends BaseTest {
     list.add(City.builder().cityId(29708).stateCode("IL").cityName("Zeigler").build());
     list.add(City.builder().cityId(29720).stateCode("IL").cityName("Zion").build());
 
-    return null;
+    return list;
+  }
+  
+  protected void assertErrorMessageValid(Map<String, Object> error, HttpStatus status ) {
+    //@formatter:off
+    assertThat(error)
+      .containsKey("message")
+      .containsEntry("status code", status.value())
+      .containsEntry("uri", "/propertymanager")
+      .containsKey("timestamp")
+      .containsEntry("reason", status.getReasonPhrase()); 
+    //@formatter:on
   }
 }
