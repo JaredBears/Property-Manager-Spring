@@ -1,16 +1,40 @@
 package com.jaredbears.propertymanager.controller.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import com.jaredbears.propertymanager.entity.City;
+import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Unit;
 
 public class FetchTestSupport extends BaseTest {
 
+  protected List<Property> buildExpectedProp() {
+    List<Property> list = new LinkedList<>();
+    list.add(Property.builder().cityId(4833).streetAddress("6166 N Sheridan")
+        .taxes(new BigDecimal(1234.56)).mortgage(new BigDecimal(789.01)).build());
+    list.add(Property.builder().cityId(4833).streetAddress("6157 N Sheridan")
+        .taxes(new BigDecimal(2345.67)).mortgage(new BigDecimal(890.12)).build());
+    Collections.sort(list);
+    return list;
+  }
 
-  protected List<City> buildExpected() {
+  protected List<Unit> buildExpectedUnit() {
+    List<Unit> list = new LinkedList<>();
+    list.add(Unit.builder().propertyId(1).unitNumber("101A").rent(new BigDecimal(675.90))
+        .leased(false).build());
+    list.add(Unit.builder().propertyId(1).unitNumber("101B").rent(new BigDecimal(775.90))
+        .leased(true).build());
+    Collections.sort(list);
+    return null;
+  }
+
+
+  protected List<City> buildExpectedCity() {
     List<City> list = new LinkedList<>();
     list.add(City.builder().cityId(28).stateCode("IL").cityName("Abingdon").build());
     list.add(City.builder().cityId(74).stateCode("IL").cityName("Adair").build());
@@ -1299,16 +1323,15 @@ public class FetchTestSupport extends BaseTest {
     list.add(City.builder().cityId(29650).stateCode("IL").cityName("Yorkville").build());
     list.add(City.builder().cityId(29708).stateCode("IL").cityName("Zeigler").build());
     list.add(City.builder().cityId(29720).stateCode("IL").cityName("Zion").build());
-
+    Collections.sort(list);
     return list;
   }
-  
-  protected void assertErrorMessageValid(Map<String, Object> error, HttpStatus status ) {
+
+  protected void assertErrorMessageValid(Map<String, Object> error, HttpStatus status) {
     //@formatter:off
     assertThat(error)
       .containsKey("message")
       .containsEntry("status code", status.value())
-      .containsEntry("uri", "/propertymanager")
       .containsKey("timestamp")
       .containsEntry("reason", status.getReasonPhrase()); 
     //@formatter:on

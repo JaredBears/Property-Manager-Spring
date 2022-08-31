@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.jaredbears.propertymanager.dao.PropertyManagerDao;
 import com.jaredbears.propertymanager.entity.City;
+import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Unit;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -31,6 +33,38 @@ public class DefaultPropertyManagerService implements PropertyManagerService {
     Collections.sort(cities);
     
     return cities;
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<Property> fetchProperties(Integer cityId) {
+    log.info("The fetchProperties method was called with cityId={}",cityId);
+    List<Property> properties = propertyManagerDao.fetchProperties(cityId);
+    
+    if(properties.isEmpty()) {
+      String msg = String.format("No properties found with cityId=%d", cityId);
+      throw new NoSuchElementException(msg);
+    }
+    
+    Collections.sort(properties);
+    
+    return properties;
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public List<Unit> fetchUnit(Integer propertyId) {
+    log.info("The fetchUnits method was called with propertyId={}",propertyId);
+    List<Unit> units = propertyManagerDao.fetchUnits(propertyId);
+    
+    if(units.isEmpty()) {
+      String msg = String.format("No properties found with propertyId=%d", propertyId);
+      throw new NoSuchElementException(msg);
+    }
+    
+    Collections.sort(units);
+    
+    return units;
   }
 
 }

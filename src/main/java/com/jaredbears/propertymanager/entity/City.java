@@ -1,7 +1,6 @@
 package com.jaredbears.propertymanager.entity;
 
 import java.util.Comparator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
