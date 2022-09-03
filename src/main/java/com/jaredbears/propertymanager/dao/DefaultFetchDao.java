@@ -5,9 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 import com.jaredbears.propertymanager.entity.City;
 import com.jaredbears.propertymanager.entity.Employee;
@@ -18,16 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class DefaultFetchDao implements FetchDao {
-  private static final String CITY_TABLE = "city";
-  private static final String PROPERTY_TABLE = "property";
-  private static final String UNIT_TABLE = "unit";
-  private static final String TENANT_TABLE = "tenant";
-  private static final String EMPLOYEE_TABLE = "employee";
-  private static final String PE_TABLE = "property_employee";
-
-  @Autowired
-  private NamedParameterJdbcTemplate jdbcTemplate;
+public class DefaultFetchDao extends DaoSupport implements FetchDao {
 
   @Override
   public List<City> fetchCities(String stateCode) {

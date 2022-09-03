@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class DefaultUpdateDao implements UpdateDao {
+public class DefaultUpdateDao extends DaoSupport implements UpdateDao {
 
   @Override
   public void updateProperty(Property property) {
@@ -33,6 +33,12 @@ public class DefaultUpdateDao implements UpdateDao {
   public void updateEmployee(Employee employee) {
     // TODO Auto-generated method stub
 
+  }
+
+  @Override
+  public void leaseUnit(String unitId, boolean leased) {
+    // TODO Auto-generated method stub
+    
   }
 
 }

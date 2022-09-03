@@ -15,6 +15,6 @@ public interface CreateService {
 
   void HireEmployee(Employee employee);
 
-  void testThatEmployeeIsAddedToProperty(String propertyId, String personId);
+  void createPropertyEmployee(String propertyId, String personId);
 
 }

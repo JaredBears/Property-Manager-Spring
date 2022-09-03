@@ -11,10 +11,10 @@ public interface CreateDao {
 
   void createUnit(Unit unit);
 
-  void leaseUnit(String unitId, Tenant tenant);
+  void createTenant(String unitId, Tenant tenant);
 
-  void HireEmployee(Employee employee);
+  void createEmployee(Employee employee);
 
-  void testThatEmployeeIsAddedToProperty(String propertyId, String personId);
+  void createPropertyEmployee(String propertyId, String personId);
 
 }

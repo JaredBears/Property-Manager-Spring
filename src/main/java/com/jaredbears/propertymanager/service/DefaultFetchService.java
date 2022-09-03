@@ -5,10 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.jaredbears.propertymanager.dao.FetchDao;
 import com.jaredbears.propertymanager.entity.City;
 import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
@@ -18,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class DefaultFetchService implements FetchService {
-  
-  @Autowired
-  private FetchDao fetchDao;
+public class DefaultFetchService extends ServiceSupport implements FetchService {
 
   @Transactional(readOnly = true)
   @Override

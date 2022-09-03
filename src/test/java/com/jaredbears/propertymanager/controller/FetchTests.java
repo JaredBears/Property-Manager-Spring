@@ -26,7 +26,6 @@ import com.jaredbears.propertymanager.entity.Unit;
 @Sql(scripts = {"classpath:flyway/migrations/V1.0__Properties_Schema.sql",
     "classpath:flyway/migrations/V1.1__City_State_data.sql",
     "classpath:flyway/migrations/V1.2__Test_Data.sql"}, config = @SqlConfig(encoding = "utf-8"))
-
 class FetchTests extends FetchTestSupport {
 
   @Test

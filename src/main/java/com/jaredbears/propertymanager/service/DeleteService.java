@@ -3,13 +3,13 @@ package com.jaredbears.propertymanager.service;
 
 public interface DeleteService {
   
-  void DeleteProperty(String propertyId);
+  void deleteProperty(String propertyId);
   
-  void DeleteUnit(String unitId);
+  void deleteUnit(String unitId);
   
-  void EvictUnit(String unitId);
+  void evictUnit(String unitId);
   
-  void FireEmployee(String personId);
+  void fireEmployee(String personId);
   
-  void RemoveEmployee(String personId, String propertyId);
+  void removePropertyEmployee(String personId, String propertyId);
 }

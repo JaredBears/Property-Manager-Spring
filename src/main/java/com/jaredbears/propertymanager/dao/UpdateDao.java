@@ -15,4 +15,6 @@ public interface UpdateDao {
   
   void updateEmployee(Employee employee);
 
+  void leaseUnit(String unitId, boolean leased);
+
 }

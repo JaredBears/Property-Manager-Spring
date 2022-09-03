@@ -1,22 +1,17 @@
 package com.jaredbears.propertymanager.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.jaredbears.propertymanager.entity.City;
 import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
 import com.jaredbears.propertymanager.entity.Tenant;
 import com.jaredbears.propertymanager.entity.Unit;
-import com.jaredbears.propertymanager.service.FetchService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class DefaultFetchController implements FetchController {
-  
-  @Autowired
-  private FetchService fetchService;
+public class DefaultFetchController extends ControllerSupport implements FetchController {
 
   @Override
   public List<City> fetchCities(String stateCode) {
