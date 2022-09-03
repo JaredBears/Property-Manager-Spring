@@ -13,7 +13,7 @@ public interface CreateService {
 
   void leaseUnit(String unitId, Tenant tenant);
 
-  void HireEmployee(Employee employee);
+  void hireEmployee(Employee employee);
 
   void createPropertyEmployee(String propertyId, String personId);
 

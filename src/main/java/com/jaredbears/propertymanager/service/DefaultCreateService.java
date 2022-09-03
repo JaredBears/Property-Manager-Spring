@@ -36,7 +36,7 @@ public class DefaultCreateService extends ServiceSupport implements CreateServic
 
   @Transactional(readOnly = false)
   @Override
-  public void HireEmployee(Employee employee) {
+  public void hireEmployee(Employee employee) {
     log.info("Hire Employee: " + employee);
     createDao.createEmployee(employee);
   }
