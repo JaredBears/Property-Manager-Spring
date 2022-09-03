@@ -24,5 +24,10 @@ class CreateTest extends CreateTestSupport {
   void testThatEmployeeIsHired() {
     //TODO
   }
+  
+  @Test
+  void testThatEmployeeIsAddedToProperty() {
+    //TODO
+  }
 
 }
