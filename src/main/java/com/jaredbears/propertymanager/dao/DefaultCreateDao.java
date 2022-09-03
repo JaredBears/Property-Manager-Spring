@@ -85,10 +85,10 @@ public class DefaultCreateDao extends DaoSupport implements CreateDao {
 
     // @formatter:off
     String sql = ""
-      + "INSERT INTO  " + PROPERTY_TABLE + " "
-      + "(property_id, unit_number, rent, leased) "
+      + "INSERT INTO  " + EMPLOYEE_TABLE + " "
+      + "(salary, name, phone, email) "
       + "VALUES "
-      + "(:property_id, :unit_number, :rent, :taxes)";
+      + "(:salary, :name, :phone, :email)";
     // @formatter:on
 
     Map<String, Object> params = new HashMap<>();
