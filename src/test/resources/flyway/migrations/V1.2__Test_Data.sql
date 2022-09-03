@@ -1,5 +1,5 @@
-INSERT INTO property (city_id, street_address, taxes, mortgage) VALUES (4833, '6166 N Sheridan', 1234.56, 789.01);
 INSERT INTO property (city_id, street_address, taxes, mortgage) VALUES (4833, '6157 N Sheridan', 2345.67, 890.12);
+INSERT INTO property (city_id, street_address, taxes, mortgage) VALUES (4833, '6166 N Sheridan', 1234.56, 789.01);
 
 INSERT INTO unit (property_id, unit_number, rent, leased) VALUES (1, '101A', 675.90, 0);
 INSERT INTO unit (property_id, unit_number, rent, leased) VALUES (1, '101B', 775.90, 1);
