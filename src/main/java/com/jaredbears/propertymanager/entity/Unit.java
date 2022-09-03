@@ -13,7 +13,6 @@ public class Unit implements Comparable<Unit> {
   private String unitNumber;
   private BigDecimal rent;
   private Boolean leased;
-  private Tenant tenant;
   
   @Override
   public int compareTo(Unit that) {

@@ -1,5 +1,6 @@
 package com.jaredbears.propertymanager.entity;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,5 +8,5 @@ import lombok.Data;
 @Builder
 public class PropertyEmployee {
   private Integer propertyId;
-  private Integer employeeId;
+  private List<Integer> employeeId;
 }

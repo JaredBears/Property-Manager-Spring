@@ -8,33 +8,82 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import com.jaredbears.propertymanager.entity.City;
+import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Tenant;
 import com.jaredbears.propertymanager.entity.Unit;
 
 public class FetchTestSupport extends BaseTest {
 
-  protected List<Property> buildExpectedProp() {
+  Employee employee1 = Employee.builder().personId(1).name("Peter Capaldi").phone("5631296320")
+      .email("number12@gallifrey.com").salary(new BigDecimal("1200.00")).build();
+  Employee employee2 = Employee.builder().personId(2).name("Amy Pond").phone("9856341287")
+      .email("petrichor@lostintime.com").salary(new BigDecimal("1000.00")).build();
+  Employee employee3 = Employee.builder().personId(3).name("Rory Williams").phone("8526417980")
+      .email("thecenturian@lostintime.com").salary(new BigDecimal("1000.00")).build();
+
+  Property property1 = Property.builder().cityId(4833).streetAddress("6166 N Sheridan")
+      .taxes(new BigDecimal("1234.56")).mortgage(new BigDecimal("789.01")).propertyId(1).build();
+  Property property2 = Property.builder().cityId(4833).streetAddress("6157 N Sheridan")
+      .taxes(new BigDecimal("2345.67")).mortgage(new BigDecimal("890.12")).propertyId(2).build();
+
+  Unit unit1 = Unit.builder().unitId(1).propertyId(1).unitNumber("101A")
+      .rent(new BigDecimal("675.90")).leased(false).build();
+  Unit unit2 = Unit.builder().unitId(2).propertyId(1).unitNumber("101B")
+      .rent(new BigDecimal("775.90")).leased(true).build();
+
+  Tenant tenant1 = Tenant.builder().personId(1).unitId(2).name("David Tennant").phone("6308675309")
+      .email("thedoctor@tardis.com").build();
+
+  protected List<Property> buildExpectedPropList() {
     List<Property> list = new LinkedList<>();
-    list.add(Property.builder().cityId(4833).streetAddress("6166 N Sheridan")
-        .taxes(new BigDecimal(1234.56)).mortgage(new BigDecimal(789.01)).build());
-    list.add(Property.builder().cityId(4833).streetAddress("6157 N Sheridan")
-        .taxes(new BigDecimal(2345.67)).mortgage(new BigDecimal(890.12)).build());
+    list.add(property1);
+    list.add(property2);
     Collections.sort(list);
     return list;
   }
 
-  protected List<Unit> buildExpectedUnit() {
+  protected Property buildExpectedProp() {
+    return property1;
+  }
+
+  protected List<Unit> buildExpectedUnitList() {
     List<Unit> list = new LinkedList<>();
-    list.add(Unit.builder().propertyId(1).unitNumber("101A").rent(new BigDecimal(675.90))
-        .leased(false).build());
-    list.add(Unit.builder().propertyId(1).unitNumber("101B").rent(new BigDecimal(775.90))
-        .leased(true).build());
+    list.add(unit1);
+    list.add(unit2);
     Collections.sort(list);
-    return null;
+    return list;
+  }
+
+  protected Unit buildExpectedUnit() {
+    return unit1;
+  }
+
+  protected Tenant buildExpectedTenant() {
+    return tenant1;
+  }
+
+  protected Employee buildExpectedEmployee() {
+    return employee1;
+  }
+
+  protected List<Employee> buildExpectedEmployeeList() {
+    List<Employee> list = new LinkedList<>();
+    list.add(employee1);
+    list.add(employee2);
+    list.add(employee3);
+    return list;
+  }
+
+  protected List<Employee> buildExpectedPropertyEmployeeList() {
+    List<Employee> list = new LinkedList<>();
+    list.add(employee1);
+    list.add(employee2);
+    return list;
   }
 
 
-  protected List<City> buildExpectedCity() {
+  protected List<City> buildExpectedCityList() {
     List<City> list = new LinkedList<>();
     list.add(City.builder().cityId(28).stateCode("IL").cityName("Abingdon").build());
     list.add(City.builder().cityId(74).stateCode("IL").cityName("Adair").build());

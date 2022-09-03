@@ -14,7 +14,6 @@ public class Property implements Comparable<Property> {
   private String streetAddress;
   private BigDecimal taxes;
   private BigDecimal mortgage;
-  private List<Unit> units;
   
   @Override
   public int compareTo(Property that) {

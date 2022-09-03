@@ -3,22 +3,21 @@ package com.jaredbears.propertymanager.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import com.jaredbears.propertymanager.controller.support.FetchTestSupport;
 import com.jaredbears.propertymanager.entity.City;
+import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Tenant;
 import com.jaredbears.propertymanager.entity.Unit;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -29,14 +28,11 @@ import com.jaredbears.propertymanager.entity.Unit;
 
 class FetchTests extends FetchTestSupport {
 
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
-
   @Test
   void testThatCitiesAreReturnedWhenStateIsSupplied() {
     //GIVEN: a valid state
     String stateCode = "IL";
-    String uri = String.format("%s/cities/?stateCode=%s", getBaseUri(), stateCode);
+    String uri = String.format("%s/cities/?stateCode=%s", getFetchUri(), stateCode);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<List<City>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -47,7 +43,7 @@ class FetchTests extends FetchTestSupport {
     
     //AND: the actual list is the same as the expected list
     List<City> actual = response.getBody();
-    List<City> expected = buildExpectedCity();
+    List<City> expected = buildExpectedCityList();
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -55,7 +51,7 @@ class FetchTests extends FetchTestSupport {
   void testThatAnErrorMessageIsReturnedWhenInvalidStateIsSupplied() {
     //GIVEN: an invalid state
     String stateCode = "INVALID";
-    String uri = String.format("%s/cities/?stateCode=%s", getBaseUri(), stateCode);
+    String uri = String.format("%s/cities/?stateCode=%s", getFetchUri(), stateCode);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
@@ -75,7 +71,7 @@ class FetchTests extends FetchTestSupport {
   void testThatPropertiesAreReturnedWhenCityIsSupplied() {
     //GIVEN: a valid city
     Integer cityId = 4833;
-    String uri = String.format("%s/properties/?cityId=%d", getBaseUri(), cityId);
+    String uri = String.format("%s/properties/?cityId=%d", getFetchUri(), cityId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<List<Property>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -86,7 +82,7 @@ class FetchTests extends FetchTestSupport {
     
     //AND: the actual list is the same as the expected list
     List<Property> actual = response.getBody();
-    List<Property> expected = buildExpectedProp();
+    List<Property> expected = buildExpectedPropList();
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -94,7 +90,45 @@ class FetchTests extends FetchTestSupport {
   void testThatAnErrorMessageIsReturnedWhenInvalidCityIsSupplied() {
     //GIVEN: an invalid state
     Integer cityId = -1;
-    String uri = String.format("%s/properties/?cityId=%d", getBaseUri(), cityId);
+    String uri = String.format("%s/properties/?cityId=%d", getFetchUri(), cityId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
+        null, new ParameterizedTypeReference<>() {});
+    
+    // Then: a bad request (400) status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    // And: an error message is returned
+    Map<String, Object> error = response.getBody();
+
+    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
+  }
+  
+  @Test
+  void testThatPropertyIsReturnedWhenIdIsSupplied() {
+    //GIVEN: a valid property Id
+    Integer propertyId = 1;
+    String uri = String.format("%s/property/?propertyId=%d", getFetchUri(), propertyId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Property> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    Property actual = response.getBody();
+    Property expected = buildExpectedProp();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAnErrorMessageIsReturnedWhenInvalidProperyIdIsSupplied() {
+    //GIVEN: an invalid state
+    Integer cityId = -1;
+    String uri = String.format("%s/property/?propertyId=%d", getFetchUri(), cityId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
@@ -110,12 +144,11 @@ class FetchTests extends FetchTestSupport {
   }
 
   
-  
   @Test
   void testThatUnitsAreReturnedWhenPropertyIsSupplied() {
     //GIVEN: a valid property
     Integer propertyId = 1;
-    String uri = String.format("%s/units/?propertyId=%d", getBaseUri(), propertyId);
+    String uri = String.format("%s/units/?propertyId=%d", getFetchUri(), propertyId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<List<Unit>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -126,7 +159,7 @@ class FetchTests extends FetchTestSupport {
     
     //AND: the actual list is the same as the expected list
     List<Unit> actual = response.getBody();
-    List<Unit> expected = buildExpectedUnit();
+    List<Unit> expected = buildExpectedUnitList();
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -134,7 +167,7 @@ class FetchTests extends FetchTestSupport {
   void testThatAnErrorMessageIsReturnedWhenInvalidPropertyIsSupplied() {
     //GIVEN: an invalid state
     Integer propertyId = -1;
-    String uri = String.format("%s/units/?propertyId=%d", getBaseUri(), propertyId);
+    String uri = String.format("%s/units/?propertyId=%d", getFetchUri(), propertyId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
@@ -147,6 +180,160 @@ class FetchTests extends FetchTestSupport {
     Map<String, Object> error = response.getBody();
 
     assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
+  }
+  
+  
+  @Test
+  void testThatUnitIsReturnedWhenIdIsSupplied() {
+    //GIVEN: a valid unit Id
+    Integer unitId = 1;
+    String uri = String.format("%s/units/?unitId=%d", getFetchUri(), unitId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Unit> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    Unit actual = response.getBody();
+    Unit expected = buildExpectedUnit();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAnErrorMessageIsReturnedWhenInvalidUnitIdIsSupplied() {
+    //GIVEN: an invalid state
+    Integer cityId = -1;
+    String uri = String.format("%s/units/?unitId=%d", getFetchUri(), cityId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
+        null, new ParameterizedTypeReference<>() {});
+    
+    // Then: a bad request (400) status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    // And: an error message is returned
+    Map<String, Object> error = response.getBody();
+
+    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
+  }
+  
+  
+  @Test
+  void testThatTenantIsReturnedWhenUnitIsSupplied() {
+    //GIVEN: a valid unit Id
+    Integer unitId = 1;
+    String uri = String.format("%s/tenant/?unitId=%d", getFetchUri(), unitId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Tenant> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    Tenant actual = response.getBody();
+    Tenant expected = buildExpectedTenant();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAnErrorMessageIsReturnedWhenInvalidUnitIdIsSuppliedTenant() {
+    //GIVEN: an invalid id
+    Integer unitId = -1;
+    String uri = String.format("%s/tenant/?unitId=%d", getFetchUri(), unitId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
+        null, new ParameterizedTypeReference<>() {});
+    
+    // Then: a bad request (400) status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    // And: an error message is returned
+    Map<String, Object> error = response.getBody();
+
+    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
+  }
+
+  
+  @Test
+  void testThatEmployeeIsReturnedWhenIdIsSupplied() {
+    //GIVEN: a valid employee Id
+    Integer employeeId = 1;
+    String uri = String.format("%s/employee/?personId=%d", getFetchUri(), employeeId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Employee> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    Employee actual = response.getBody();
+    Employee expected = buildExpectedEmployee();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAllEmployeesAreReturned() {
+    //GIVEN: 
+    String uri = String.format("%s/employees/?personId=", getFetchUri());
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<List<Employee>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    List<Employee> actual = response.getBody();
+    List<Employee> expected = buildExpectedEmployeeList();
+    assertThat(actual).isEqualTo(expected);
+  }
+  
+  @Test
+  void testThatAnErrorMessageIsReturnedWhenInvalidEmployeeIdIsSupplied() {
+    //GIVEN: an invalid id
+    Integer employeeId = -1;
+    String uri = String.format("%s/property/?personId=%d", getFetchUri(), employeeId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
+        null, new ParameterizedTypeReference<>() {});
+    
+    // Then: a bad request (400) status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    // And: an error message is returned
+    Map<String, Object> error = response.getBody();
+
+    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
+  }
+  
+  @Test
+  void testThatEmployeesAreReturnedWhenPropertyIdIsSupplied() {
+    //GIVEN: a valid property Id
+    Integer propertyId = 1;
+    String uri = String.format("%s/unitemployees/?propertyId=%d", getFetchUri(), propertyId);
+    
+    //WHEN: a connection is made to the URI
+    ResponseEntity<List<Employee>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
+        new ParameterizedTypeReference<>() {});
+    
+    //THEN: a success status code is returned
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    
+    //AND: the actual list is the same as the expected list
+    List<Employee> actual = response.getBody();
+    List<Employee> expected = buildExpectedPropertyEmployeeList();
+    assertThat(actual).isEqualTo(expected);
   }
 
 

@@ -13,8 +13,8 @@ public class BaseTest {
   @Getter
   private TestRestTemplate restTemplate;
 
-  protected String getBaseUri() {
-    return String.format("http://localhost:%d/propertymanager", serverPort);
+  protected String getFetchUri() {
+    return String.format("http://localhost:%d/fetch", serverPort);
   }
 
 }

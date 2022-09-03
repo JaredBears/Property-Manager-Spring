@@ -49,7 +49,7 @@ CREATE TABLE tenant(
     phone CHAR(10) NOT NULL,
     email VARCHAR(64) NOT NULL,
     PRIMARY KEY (person_id),
-    UNIQUE KEY (name, unit_id),
+    UNIQUE KEY (unit_id),
     FOREIGN KEY (unit_id) REFERENCES unit (unit_id) ON DELETE CASCADE
 );
 
