@@ -90,11 +90,9 @@ public interface CreateController {
       @RequestParam(required = true) 
         String streetAddress,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String taxes,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String mortgage
       
@@ -137,13 +135,13 @@ public interface CreateController {
               description = "The Property ID (i.e., '1'"
               ),
           @Parameter(
-              name = "unit_number", 
+              name = "unitNumber", 
               allowEmptyValue = false, 
               required = true, 
               description = "The Unit Number: ie, '101A'"
               ),
           @Parameter(
-              name = "rents", 
+              name = "rent", 
               allowEmptyValue = false, 
               required = true, 
               description = "The Rent amount, ie, '1200.00'"
@@ -237,7 +235,6 @@ public interface CreateController {
       @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String phone,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String email
       
@@ -302,7 +299,6 @@ public interface CreateController {
   @ResponseStatus(code = HttpStatus.CREATED)
   void hireEmployee(
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String salary,
       @Pattern(regexp = "[\\w\\s]*")
@@ -312,7 +308,6 @@ public interface CreateController {
       @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String phone,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String email
       

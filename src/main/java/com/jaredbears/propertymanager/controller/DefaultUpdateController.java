@@ -13,12 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultUpdateController extends ControllerSupport implements UpdateController {
 
   @Override
-  public void updateProperty(String propertyId, String streetAddress, String taxes, String mortgage) {
+  public void updateProperty(String propertyId, String taxes, String mortgage) {
     Property property = fetchService.fetchProperty(propertyId);
     
     log.info("Update Property: " + property);
     
-    property.setStreetAddress(streetAddress);
     property.setTaxes(new BigDecimal(taxes));
     property.setMortgage(new BigDecimal(mortgage));
     

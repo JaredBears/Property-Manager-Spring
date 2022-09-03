@@ -20,15 +20,11 @@ public class DefaultUpdateDao extends DaoSupport implements UpdateDao {
     // @formatter:off
     String sql = ""
       + "UPDATE " + PROPERTY_TABLE + " "
-      + "SET (city_id, street_address, taxes, mortgage) "
-      + "VALUES "
-      + "(:city_id, :street_address, :taxes, :mortgage) "
+      + "SET taxes = :taxes, mortgage = :mortgage "
       + "WHERE property_id = :property_id";
     // @formatter:on
 
     Map<String, Object> params = new HashMap<>();
-    params.put("city_id", property.getCityId());
-    params.put("street_address", property.getStreetAddress());
     params.put("taxes", property.getTaxes());
     params.put("mortgage", property.getMortgage());
     params.put("property_id", property.getPropertyId());
@@ -43,17 +39,13 @@ public class DefaultUpdateDao extends DaoSupport implements UpdateDao {
     // @formatter:off
     String sql = ""
       + "UPDATE " + UNIT_TABLE + " "
-      + "SET (property_id, unit_number, rent, leased) "
-      + "VALUES "
-      + "(:property_id, :unit_number, :rent, :taxes) "
+      + "SET unit_number = :unit_number, rent = :rent "
       + "WHERE unit_id = :unit_id";
     // @formatter:on
 
     Map<String, Object> params = new HashMap<>();
-    params.put("property_id", unit.getPropertyId());
     params.put("unit_number", unit.getUnitNumber());
     params.put("rent", unit.getRent());
-    params.put("leased", unit.getLeased());
     params.put("unit_id", unit.getUnitId());
 
     jdbcTemplate.update(sql, params);
@@ -67,9 +59,7 @@ public class DefaultUpdateDao extends DaoSupport implements UpdateDao {
     // @formatter:off
     String sql = ""
       + "UPDATE " + TENANT_TABLE + " "
-      + "SET name, phone, email) "
-      + "VALUES "
-      + "(:name, :phone, :email) "
+      + "SET name = :name, phone = :phone, email = :email "
       + "WHERE unit_id = :unit_id";
     // @formatter:on
 
@@ -90,9 +80,7 @@ public class DefaultUpdateDao extends DaoSupport implements UpdateDao {
     // @formatter:off
     String sql = ""
       + "UPDATE " + EMPLOYEE_TABLE + " "
-      + "SET (salary, name, phone, email) "
-      + "VALUES "
-      + "(:salary, :name, :phone, :email) "
+      + "SET salary = :salary, name = :name, phone = :phone, email = :email "
       + "WHERE person_id = :person_id";
     // @formatter:on
 

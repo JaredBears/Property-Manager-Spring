@@ -56,13 +56,7 @@ public interface UpdateController {
               name = "propertyId", 
               allowEmptyValue = false, 
               required = true, 
-              description = "The Property ID (i.e., '4833'"
-              ),
-          @Parameter(
-              name = "streetAddress", 
-              allowEmptyValue = false, 
-              required = true, 
-              description = "The Street Addres: ie, '1 Main St'"
+              description = "The Property ID (i.e., '1'"
               ),
           @Parameter(
               name = "taxes", 
@@ -85,16 +79,10 @@ public interface UpdateController {
       @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String propertyId,
-      @Length(max = 20)
-      @Pattern(regexp = "[\\w\\s]*")
-      @RequestParam(required = true) 
-        String streetAddress,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String taxes,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String mortgage
       
@@ -134,16 +122,16 @@ public interface UpdateController {
               name = "unitId", 
               allowEmptyValue = false, 
               required = true, 
-              description = "The Property ID (i.e., '1'"
+              description = "The Unit ID (i.e., '1'"
               ),
           @Parameter(
-              name = "unit_number", 
+              name = "unitNumber", 
               allowEmptyValue = false, 
               required = true, 
               description = "The Unit Number: ie, '101A'"
               ),
           @Parameter(
-              name = "rents", 
+              name = "rent", 
               allowEmptyValue = false, 
               required = true, 
               description = "The Rent amount, ie, '1200.00'"
@@ -153,16 +141,13 @@ public interface UpdateController {
   @PutMapping("/unit")
   @ResponseStatus(code = HttpStatus.OK)
   void updateUnit(
-      @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
+      @Length(max = 5)
       @RequestParam(required = true) 
         String unitId,
       @Length(max = 5)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String unitNumber,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String rent
       
@@ -171,12 +156,12 @@ public interface UpdateController {
   
   //@formatter: off
   @Operation(
-      summary = "Update an Employee",
-      description = "Update an Employee given valid input",
+      summary = "Update a Tenant",
+      description = "Update a Tenant given valid input",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "An Employee is updated.", 
+              description = "A Tenant is updated.", 
               content = @Content(mediaType = "application/json", 
               schema = @Schema(implementation = City.class))
               ),
@@ -207,19 +192,19 @@ public interface UpdateController {
               name = "name", 
               allowEmptyValue = false, 
               required = true, 
-              description = "The Tenant's Name: ie, 'John Smith'"
+              description = "The Employee's Name: ie, 'John Smith'"
               ),
           @Parameter(
               name = "phone", 
               allowEmptyValue = false, 
               required = true, 
-              description = "The Tenant's Phone: ie, '5553331234'"
+              description = "The Employee's Phone: ie, '5553331234'"
               ),
           @Parameter(
               name = "email", 
               allowEmptyValue = false, 
               required = true, 
-              description = "The Tenant's Email: ie, 'testEmail@test.com'"
+              description = "The Email's Email: ie, 'testEmail@test.com'"
               )
       }
   )
@@ -230,14 +215,11 @@ public interface UpdateController {
       @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String unitId,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String name,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String phone,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String email
       
@@ -309,21 +291,16 @@ public interface UpdateController {
   @ResponseStatus(code = HttpStatus.OK)
   void updateEmployee(
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String salary,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String name,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String phone,
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String email,
       @Length(max = 10)
-      @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = true) 
         String personId
       

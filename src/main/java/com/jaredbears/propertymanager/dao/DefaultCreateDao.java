@@ -44,7 +44,7 @@ public class DefaultCreateDao extends DaoSupport implements CreateDao {
       + "INSERT INTO  " + UNIT_TABLE + " "
       + "(property_id, unit_number, rent, leased) "
       + "VALUES "
-      + "(:property_id, :unit_number, :rent, :taxes)";
+      + "(:property_id, :unit_number, :rent, :leased)";
     // @formatter:on
 
     Map<String, Object> params = new HashMap<>();

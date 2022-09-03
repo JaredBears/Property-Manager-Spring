@@ -407,12 +407,12 @@ public interface FetchController {
   
   //@formatter: off
   @Operation(
-      summary = "Returns an Employee",
-      description = "Returns an Tenant given a Unit ID",
+      summary = "Returns a Tenant",
+      description = "Returns a Tenant given a Unit ID",
       responses = {
           @ApiResponse(
               responseCode = "200", 
-              description = "A list of Employees is returned.", 
+              description = "A Tenant is returned.", 
               content = @Content(mediaType = "application/json", 
               schema = @Schema(implementation = City.class))
               ),
@@ -423,7 +423,7 @@ public interface FetchController {
               ),
           @ApiResponse(
               responseCode = "404", 
-              description = "No Employees with the input criteria.", 
+              description = "No Tenants with the input criteria.", 
               content = @Content(mediaType = "application/json")
               ),
           @ApiResponse(
@@ -434,10 +434,10 @@ public interface FetchController {
       },
       parameters = {
           @Parameter(
-              name = "personId", 
+              name = "unitId", 
               allowEmptyValue = false, 
               required = false, 
-              description = "The Employee ID (i.e., '1'"
+              description = "The Unit ID (i.e., '1'"
               ),
       }
   )
@@ -447,7 +447,7 @@ public interface FetchController {
       @Length(max = 10)
       @Pattern(regexp = "[\\w\\s]*")
       @RequestParam(required = false) 
-        String personId
+        String unitId
       );
   //@formatter: on
   
