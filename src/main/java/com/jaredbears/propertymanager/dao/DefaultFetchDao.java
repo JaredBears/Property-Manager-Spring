@@ -97,8 +97,8 @@ public class DefaultFetchDao implements FetchDao {
     // @formatter:on
 
     Map<String, Object> params = new HashMap<>();
-    params.put("city_id", propertyId);
-    List<Property> prop = jdbcTemplate.query(sql, params, new RowMapper<>() {
+    params.put("property_id", propertyId);
+    Property prop = jdbcTemplate.queryForObject(sql, params, new RowMapper<>() {
 
       @Override
       public Property mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -114,7 +114,7 @@ public class DefaultFetchDao implements FetchDao {
       }
     });
 
-    return prop.get(0);
+    return prop;
   }
 
   @Override
@@ -188,13 +188,14 @@ public class DefaultFetchDao implements FetchDao {
 
     Map<String, Object> params = new HashMap<>();
     params.put("unit_id", unitId);
-    List<Tenant> tenant = jdbcTemplate.query(sql, params, new RowMapper<>() {
+    Tenant tenant = jdbcTemplate.queryForObject(sql, params, new RowMapper<>() {
 
       @Override
       public Tenant mapRow(ResultSet rs, int rowNum) throws SQLException {
         //@formatter:off
         return Tenant.builder()
             .unitId(rs.getInt("unit_id"))
+            .personId(rs.getInt("person_id"))
             .name(rs.getString("name"))
             .phone(rs.getString("phone"))
             .email(rs.getString("email"))
@@ -203,7 +204,7 @@ public class DefaultFetchDao implements FetchDao {
       }
     });
 
-    return tenant.get(0);
+    return tenant;
   }
 
   @Override
@@ -248,7 +249,7 @@ public class DefaultFetchDao implements FetchDao {
     
     log.debug(sql + " {}", personId);
 
-    List<Employee> employees = jdbcTemplate.query(sql, new RowMapper<>() {
+    Employee employee = jdbcTemplate.queryForObject(sql, params, new RowMapper<>() {
 
       @Override
       public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -264,7 +265,7 @@ public class DefaultFetchDao implements FetchDao {
       }
     });
 
-    return employees.get(0);
+    return employee;
   }
 
   @Override
@@ -279,7 +280,7 @@ public class DefaultFetchDao implements FetchDao {
     Map<String, Object> params = new HashMap<>();
     params.put("property_id", propertyId);
 
-    List<Integer> table = jdbcTemplate.query(sql, new RowMapper<>() {
+    List<Integer> table = jdbcTemplate.query(sql, params, new RowMapper<>() {
 
       @Override
       public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {

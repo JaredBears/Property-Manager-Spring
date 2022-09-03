@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.jaredbears.propertymanager.entity.City;
 import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Tenant;
 import com.jaredbears.propertymanager.entity.Unit;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -113,7 +114,7 @@ public interface FetchController {
       parameters = {
           @Parameter(
               name = "cityId", 
-              allowEmptyValue = true, 
+              allowEmptyValue = false, 
               required = false, 
               description = "The City ID (i.e., '4833'"
               ),
@@ -209,7 +210,7 @@ public interface FetchController {
       parameters = {
           @Parameter(
               name = "propertyId", 
-              allowEmptyValue = true, 
+              allowEmptyValue = false, 
               required = false, 
               description = "The property ID (i.e., '1'"
               ),
@@ -255,7 +256,7 @@ public interface FetchController {
       parameters = {
           @Parameter(
               name = "unitId", 
-              allowEmptyValue = true, 
+              allowEmptyValue = false, 
               required = false, 
               description = "The Unit ID (i.e., '1'"
               ),
@@ -338,7 +339,7 @@ public interface FetchController {
       parameters = {
           @Parameter(
               name = "propertyId", 
-              allowEmptyValue = true, 
+              allowEmptyValue = false, 
               required = false, 
               description = "The Property ID (i.e., '1'"
               ),
@@ -384,7 +385,7 @@ public interface FetchController {
       parameters = {
           @Parameter(
               name = "personId", 
-              allowEmptyValue = true, 
+              allowEmptyValue = false, 
               required = false, 
               description = "The Employee ID (i.e., '1'"
               ),
@@ -399,5 +400,56 @@ public interface FetchController {
         String personId
       );
   //@formatter: on
+  
+  /*
+   * TENANTS
+   */
+  
+  //@formatter: off
+  @Operation(
+      summary = "Returns an Employee",
+      description = "Returns an Tenant given a Unit ID",
+      responses = {
+          @ApiResponse(
+              responseCode = "200", 
+              description = "A list of Employees is returned.", 
+              content = @Content(mediaType = "application/json", 
+              schema = @Schema(implementation = City.class))
+              ),
+          @ApiResponse(
+              responseCode = "400", 
+              description = "The request parameters are invalid.", 
+              content = @Content(mediaType = "application/json")
+              ),
+          @ApiResponse(
+              responseCode = "404", 
+              description = "No Employees with the input criteria.", 
+              content = @Content(mediaType = "application/json")
+              ),
+          @ApiResponse(
+              responseCode = "500", 
+              description = "An unplanned error occurred.", 
+              content = @Content(mediaType = "application/json")
+              )
+      },
+      parameters = {
+          @Parameter(
+              name = "personId", 
+              allowEmptyValue = false, 
+              required = false, 
+              description = "The Employee ID (i.e., '1'"
+              ),
+      }
+  )
+  @GetMapping("/tenant")
+  @ResponseStatus(code = HttpStatus.OK)
+  Tenant fetchTenant(
+      @Length(max = 10)
+      @Pattern(regexp = "[\\w\\s]*")
+      @RequestParam(required = false) 
+        String personId
+      );
+  //@formatter: on
+  
   
 }

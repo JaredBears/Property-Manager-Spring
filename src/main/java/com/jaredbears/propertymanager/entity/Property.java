@@ -2,12 +2,15 @@ package com.jaredbears.propertymanager.entity;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
-import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Property implements Comparable<Property> {
   private Integer propertyId;
   private Integer cityId;

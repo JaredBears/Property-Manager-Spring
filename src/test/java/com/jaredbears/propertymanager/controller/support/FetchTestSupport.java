@@ -2,7 +2,6 @@ package com.jaredbears.propertymanager.controller.support;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,6 @@ public class FetchTestSupport extends BaseTest {
     List<Property> list = new LinkedList<>();
     list.add(property1);
     list.add(property2);
-    Collections.sort(list);
     return list;
   }
 
@@ -51,7 +49,6 @@ public class FetchTestSupport extends BaseTest {
     List<Unit> list = new LinkedList<>();
     list.add(unit1);
     list.add(unit2);
-    Collections.sort(list);
     return list;
   }
 
@@ -1372,7 +1369,6 @@ public class FetchTestSupport extends BaseTest {
     list.add(City.builder().cityId(29650).stateCode("IL").cityName("Yorkville").build());
     list.add(City.builder().cityId(29708).stateCode("IL").cityName("Zeigler").build());
     list.add(City.builder().cityId(29720).stateCode("IL").cityName("Zion").build());
-    Collections.sort(list);
     return list;
   }
 

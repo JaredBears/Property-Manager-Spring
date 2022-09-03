@@ -16,5 +16,17 @@ public class BaseTest {
   protected String getFetchUri() {
     return String.format("http://localhost:%d/fetch", serverPort);
   }
+  
+  protected String getCreateUri() {
+    return String.format("http://localhost:%d/create", serverPort);
+  }
+  
+  protected String getUpdateUri() {
+    return String.format("http://localhost:%d/update", serverPort);
+  }
+  
+  protected String getDeleteUri() {
+    return String.format("http://localhost:%d/delete", serverPort);
+  }
 
 }

@@ -1,6 +1,7 @@
 package com.jaredbears.propertymanager.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,8 @@ class FetchTests extends FetchTestSupport {
     //AND: the actual list is the same as the expected list
     List<City> actual = response.getBody();
     List<City> expected = buildExpectedCityList();
+    Collections.sort(actual);
+    Collections.sort(expected);
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -83,6 +86,8 @@ class FetchTests extends FetchTestSupport {
     //AND: the actual list is the same as the expected list
     List<Property> actual = response.getBody();
     List<Property> expected = buildExpectedPropList();
+    Collections.sort(actual);
+    Collections.sort(expected);
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -143,7 +148,6 @@ class FetchTests extends FetchTestSupport {
     assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
   }
 
-  
   @Test
   void testThatUnitsAreReturnedWhenPropertyIsSupplied() {
     //GIVEN: a valid property
@@ -160,6 +164,8 @@ class FetchTests extends FetchTestSupport {
     //AND: the actual list is the same as the expected list
     List<Unit> actual = response.getBody();
     List<Unit> expected = buildExpectedUnitList();
+    Collections.sort(actual);
+    Collections.sort(expected);
     assertThat(actual).isEqualTo(expected);
   }
   
@@ -187,7 +193,7 @@ class FetchTests extends FetchTestSupport {
   void testThatUnitIsReturnedWhenIdIsSupplied() {
     //GIVEN: a valid unit Id
     Integer unitId = 1;
-    String uri = String.format("%s/units/?unitId=%d", getFetchUri(), unitId);
+    String uri = String.format("%s/unit/?unitId=%d", getFetchUri(), unitId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<Unit> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -203,29 +209,9 @@ class FetchTests extends FetchTestSupport {
   }
   
   @Test
-  void testThatAnErrorMessageIsReturnedWhenInvalidUnitIdIsSupplied() {
-    //GIVEN: an invalid state
-    Integer cityId = -1;
-    String uri = String.format("%s/units/?unitId=%d", getFetchUri(), cityId);
-    
-    //WHEN: a connection is made to the URI
-    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
-        null, new ParameterizedTypeReference<>() {});
-    
-    // Then: a bad request (400) status code is returned
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-    // And: an error message is returned
-    Map<String, Object> error = response.getBody();
-
-    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
-  }
-  
-  
-  @Test
   void testThatTenantIsReturnedWhenUnitIsSupplied() {
     //GIVEN: a valid unit Id
-    Integer unitId = 1;
+    Integer unitId = 2;
     String uri = String.format("%s/tenant/?unitId=%d", getFetchUri(), unitId);
     
     //WHEN: a connection is made to the URI
@@ -295,33 +281,16 @@ class FetchTests extends FetchTestSupport {
     //AND: the actual list is the same as the expected list
     List<Employee> actual = response.getBody();
     List<Employee> expected = buildExpectedEmployeeList();
+    Collections.sort(actual);
+    Collections.sort(expected);
     assertThat(actual).isEqualTo(expected);
-  }
-  
-  @Test
-  void testThatAnErrorMessageIsReturnedWhenInvalidEmployeeIdIsSupplied() {
-    //GIVEN: an invalid id
-    Integer employeeId = -1;
-    String uri = String.format("%s/property/?personId=%d", getFetchUri(), employeeId);
-    
-    //WHEN: a connection is made to the URI
-    ResponseEntity<Map<String, Object>> response = getRestTemplate().exchange(uri, HttpMethod.GET,
-        null, new ParameterizedTypeReference<>() {});
-    
-    // Then: a bad request (400) status code is returned
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
-    // And: an error message is returned
-    Map<String, Object> error = response.getBody();
-
-    assertErrorMessageValid(error, HttpStatus.BAD_REQUEST);
   }
   
   @Test
   void testThatEmployeesAreReturnedWhenPropertyIdIsSupplied() {
     //GIVEN: a valid property Id
     Integer propertyId = 1;
-    String uri = String.format("%s/unitemployees/?propertyId=%d", getFetchUri(), propertyId);
+    String uri = String.format("%s/propertyemployees/?propertyId=%d", getFetchUri(), propertyId);
     
     //WHEN: a connection is made to the URI
     ResponseEntity<List<Employee>> response = getRestTemplate().exchange(uri, HttpMethod.GET, null,
@@ -333,6 +302,8 @@ class FetchTests extends FetchTestSupport {
     //AND: the actual list is the same as the expected list
     List<Employee> actual = response.getBody();
     List<Employee> expected = buildExpectedPropertyEmployeeList();
+    Collections.sort(actual);
+    Collections.sort(expected);
     assertThat(actual).isEqualTo(expected);
   }
 

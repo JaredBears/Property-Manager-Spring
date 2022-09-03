@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jaredbears.propertymanager.entity.City;
 import com.jaredbears.propertymanager.entity.Employee;
 import com.jaredbears.propertymanager.entity.Property;
+import com.jaredbears.propertymanager.entity.Tenant;
 import com.jaredbears.propertymanager.entity.Unit;
 import com.jaredbears.propertymanager.service.FetchService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,5 +65,11 @@ public class DefaultFetchController implements FetchController {
   public Employee fetchEmployee(String personId) {
     log.info("personId = {}", personId);
     return fetchService.fetchEmployee(personId);
+  }
+
+  @Override
+  public Tenant fetchTenant(String unitId) {
+    log.info("personId={}", unitId);
+    return fetchService.fetchTenant(unitId);
   }
 }
