@@ -1,0 +1,864 @@
+openapi: 3.0.1
+info:
+  title: Property Manager Service
+servers:
+  - url: http://localhost:8080
+    description: Local server.
+paths:
+  /update/unit:
+    put:
+      tags:
+        - default-update-controller
+      summary: Updates a Unit
+      description: Updates a Unit given valid input
+      operationId: updateUnit
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+        - name: unitNumber
+          in: query
+          description: 'The Unit Number: ie, ''101A'''
+          required: true
+          schema:
+            type: string
+        - name: rent
+          in: query
+          description: The Rent amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A Unit is updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Units with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /update/tenant:
+    put:
+      tags:
+        - default-update-controller
+      summary: Update a Tenant
+      description: Update a Tenant given valid input
+      operationId: updateTenant
+      parameters:
+        - name: unitId
+          in: query
+          description: 'The Unit ID: ie, ''1'''
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'The Employee''s Name: ie, ''John Smith'''
+          required: true
+          schema:
+            type: string
+        - name: phone
+          in: query
+          description: 'The Employee''s Phone: ie, ''5553331234'''
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 'The Email''s Email: ie, ''testEmail@test.com'''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A Tenant is updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /update/property:
+    put:
+      tags:
+        - default-update-controller
+      summary: Updates a Property
+      description: Updates a Property given valid input
+      operationId: updateProperty
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+        - name: taxes
+          in: query
+          description: The Tax amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+        - name: mortgage
+          in: query
+          description: The Mortgage amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A property is updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /update/employee:
+    put:
+      tags:
+        - default-update-controller
+      summary: Update an Employee
+      description: Update an Employee given valid input
+      operationId: updateEmployee
+      parameters:
+        - name: salary
+          in: query
+          description: The Employee's Salary (i.e., '1200.00'
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'The Employee''s Name: ie, ''John Smith'''
+          required: true
+          schema:
+            type: string
+        - name: phone
+          in: query
+          description: 'The Employee''s Phone: ie, ''5553331234'''
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 'The Employee''s Email: ie, ''testEmail@test.com'''
+          required: true
+          schema:
+            type: string
+        - name: personId
+          in: query
+          description: 'The Employee''s ID: ie, ''1'''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An Employee is updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /create/unit:
+    post:
+      tags:
+        - default-create-controller
+      summary: Creates a Unit
+      description: Creates a Unit given valid input
+      operationId: createUnit
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+        - name: unitNumber
+          in: query
+          description: 'The Unit Number: ie, ''101A'''
+          required: true
+          schema:
+            type: string
+        - name: rent
+          in: query
+          description: The Rent amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: A Unit is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Units with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /create/propertyemployee:
+    post:
+      tags:
+        - default-create-controller
+      summary: Assigns an Employee to a Property
+      description: Creates a Property/Employee relationship given valid input
+      operationId: createPropertyEmployee
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+        - name: personId
+          in: query
+          description: The Employee ID (i.e, '1'
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: A Property/Employee Relationship is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /create/property:
+    post:
+      tags:
+        - default-create-controller
+      summary: Creates a Property
+      description: Creates a Property given valid input
+      operationId: createProperty
+      parameters:
+        - name: cityId
+          in: query
+          description: The City ID (i.e., '4833'
+          required: true
+          schema:
+            type: string
+        - name: streetAddress
+          in: query
+          description: 'The Street Addres: ie, ''1 Main St'''
+          required: true
+          schema:
+            type: string
+        - name: taxes
+          in: query
+          description: The Tax amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+        - name: mortgage
+          in: query
+          description: The Mortgage amount, ie, '1200.00'
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: A property is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /create/lease:
+    post:
+      tags:
+        - default-create-controller
+      summary: Leases a Unit
+      description: Creates a Lease/Tenant given valid input
+      operationId: leaseUnit
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'The Tenant''s Name: ie, ''John Smith'''
+          required: true
+          schema:
+            type: string
+        - name: phone
+          in: query
+          description: 'The Tenant''s Phone: ie, ''5553331234'''
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 'The Tenant''s Email: ie, ''testEmail@test.com'''
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: A Lease/Tenant is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /create/hire:
+    post:
+      tags:
+        - default-create-controller
+      summary: Hire an Employee
+      description: Creates an Employee given valid input
+      operationId: hireEmployee
+      parameters:
+        - name: salary
+          in: query
+          description: The Employee's Salary (i.e., '1200.00'
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: 'The Employee''s Name: ie, ''John Smith'''
+          required: true
+          schema:
+            type: string
+        - name: phone
+          in: query
+          description: 'The Employee''s Phone: ie, ''5553331234'''
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 'The Employee''s Email: ie, ''testEmail@test.com'''
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: An Employee is created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/units:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a list of Units
+      description: Returns a list of Units given an optional Property
+      operationId: fetchUnits
+      parameters:
+        - name: propertyId
+          in: query
+          description: The property ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Units is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Units with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/unit:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a Unit
+      description: Returns a Unit given an id
+      operationId: fetchUnit
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Units is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Units with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/tenant:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a Tenant
+      description: Returns a Tenant given a Unit ID
+      operationId: fetchTenant
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A Tenant is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Tenants with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/propertyemployees:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a list of Employees
+      description: Returns a list of Employees given a property ID
+      operationId: fetchEmployees
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Employees is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Employees with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/property:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a Property
+      description: Returns a Property given a Property ID
+      operationId: fetchProperty
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Properties is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/properties:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a list of Properties
+      description: Returns a list of Properties given an optional City ID
+      operationId: fetchProperties
+      parameters:
+        - name: cityId
+          in: query
+          description: The City ID (i.e., '4833'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Properties is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/employees:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a list of All Employees
+      description: Returns a list of All Employees
+      operationId: fetchAllEmployees
+      responses:
+        '200':
+          description: A list of Employees is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Employees with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/employee:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns an Employee
+      description: Returns an Employee given an ID
+      operationId: fetchEmployee
+      parameters:
+        - name: personId
+          in: query
+          description: The Employee ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Employees is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Employees with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /fetch/cities:
+    get:
+      tags:
+        - default-fetch-controller
+      summary: Returns a list of Cities
+      description: Returns a list of Cities given an optional state
+      operationId: fetchCities
+      parameters:
+        - name: stateCode
+          in: query
+          description: The state code (i.e., 'IL'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of Cities is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Cities with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /delete/unit:
+    get:
+      tags:
+        - default-delete-controller
+      summary: Deletes a Unit
+      description: Delete a Unit given an id
+      operationId: deleteUnit
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The Unit is deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Units with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /delete/tenant:
+    get:
+      tags:
+        - default-delete-controller
+      summary: Evicts/Deletes a Tenant
+      description: Evicts/Deletes a Tenant given a Unit ID
+      operationId: evictTenant
+      parameters:
+        - name: unitId
+          in: query
+          description: The Unit ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The Tenant is deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Tenants with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /delete/property:
+    get:
+      tags:
+        - default-delete-controller
+      summary: Deletes a Property
+      description: Deletes a Property given a Property ID
+      operationId: deleteProperty
+      parameters:
+        - name: propertyId
+          in: query
+          description: The Property ID (i.e., '1'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A property is deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Properties with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
+  /delete/employee:
+    get:
+      tags:
+        - default-delete-controller
+      summary: Fires/Deletes an Employee
+      description: Fires/Deletes an Employee given an ID
+      operationId: fireEmployee
+      parameters:
+        - name: personId
+          in: query
+          description: The Employee ID (i.e., '1'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The Employee is deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        '400':
+          description: The request parameters are invalid.
+          content:
+            application/json: {}
+        '404':
+          description: No Employees with the input criteria.
+          content:
+            application/json: {}
+        '500':
+          description: An unplanned error occurred.
+          content:
+            application/json: {}
